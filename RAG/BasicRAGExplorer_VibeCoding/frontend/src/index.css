@@ -1,5 +1,55 @@
 :root {
+  color-scheme: dark;
+
+  --bg: #05070a;
+  --text-primary: #e6e9ef;
+  --text-secondary: #9aa3b2;
+  --text-muted: #6b7383;
+  --text-faint: #5b6472;
+  --text-faint-2: #4b5563;
+
+  --panel-bg: #0d1117;
+  --panel-border: #1f2733;
+
+  --surface-bg: #11161f;
+  --surface-bg-2: #1a212c;
+  --surface-border: #262e3b;
+  --surface-border-strong: #2c3644;
+  --border-strong: #3a4354;
+
+  --error-bg: #2a1215;
+  --error-border: #4c1d1d;
+  --error-text: #f87171;
+
+  --btn-disabled-bg: #262e3b;
+  --btn-disabled-text: #6b7383;
+}
+
+:root[data-theme="light"] {
   color-scheme: light;
+
+  --bg: #f4f5f8;
+  --text-primary: #1a1f29;
+  --text-secondary: #4b5568;
+  --text-muted: #667085;
+  --text-faint: #8b93a1;
+  --text-faint-2: #9aa3b2;
+
+  --panel-bg: #ffffff;
+  --panel-border: #e1e4ea;
+
+  --surface-bg: #f1f3f7;
+  --surface-bg-2: #e7e9f0;
+  --surface-border: #dde1e8;
+  --surface-border-strong: #cdd2dc;
+  --border-strong: #b7bdc9;
+
+  --error-bg: #fdecec;
+  --error-border: #f6c1c1;
+  --error-text: #dc2626;
+
+  --btn-disabled-bg: #e1e4ea;
+  --btn-disabled-text: #9aa3b2;
 }
 
 * {
@@ -8,5 +58,6 @@
 
 body {
   margin: 0;
-  background: #f4f5f7;
+  background: var(--bg);
+  transition: background 0.2s ease;
 }

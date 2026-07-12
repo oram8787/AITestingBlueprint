@@ -12,7 +12,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PDF_PATH = os.path.join(BASE_DIR, "..", "Data", "VMO_PRD_Document.pdf")
+DEFAULT_PDF_PATH = os.path.join(BASE_DIR, "..", "data", "VMO_PRD_Document.pdf")
+UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 CHROMA_DIR = os.path.join(BASE_DIR, "chroma_store")
 COLLECTION_NAME = "vwo_prd"
 EMBED_MODEL_NAME = "nomic-ai/nomic-embed-text-v1.5"
@@ -41,7 +42,7 @@ def get_chroma_client():
     return _chroma_client
 
 
-def get_collection(create=False):
+def get_collection(create=False, source_name=None):
     client = get_chroma_client()
     if create:
         try:
@@ -49,15 +50,17 @@ def get_collection(create=False):
         except Exception:
             pass
         return client.create_collection(
-            name=COLLECTION_NAME, metadata={"hnsw:space": "cosine"}
+            name=COLLECTION_NAME,
+            metadata={"hnsw:space": "cosine", "source_name": source_name or ""},
         )
     return client.get_or_create_collection(
         name=COLLECTION_NAME, metadata={"hnsw:space": "cosine"}
     )
 
 
-def load_pdf():
-    reader = PdfReader(PDF_PATH)
+def load_pdf(pdf_path=None):
+    pdf_path = pdf_path or DEFAULT_PDF_PATH
+    reader = PdfReader(pdf_path)
     pages = [re.sub(r"\s+", " ", page.extract_text() or "").strip() for page in reader.pages]
     full_text = "\n\n".join(pages)
     return {
@@ -92,11 +95,13 @@ def embed_query(question: str):
     return embedding[0]
 
 
-def run_ingestion():
-    stages = {}
+def run_ingestion(pdf_path=None, source_name=None):
+    resolved_path = pdf_path or DEFAULT_PDF_PATH
+    resolved_name = source_name or os.path.basename(resolved_path)
+    stages = {"source_name": resolved_name, "is_default": pdf_path is None}
 
     t0 = time.perf_counter()
-    pdf_data = load_pdf()
+    pdf_data = load_pdf(resolved_path)
     stages["load"] = {
         "duration_ms": round((time.perf_counter() - t0) * 1000, 1),
         "num_pages": pdf_data["num_pages"],
@@ -125,7 +130,7 @@ def run_ingestion():
     }
 
     t0 = time.perf_counter()
-    collection = get_collection(create=True)
+    collection = get_collection(create=True, source_name=resolved_name)
     ids = [f"chunk-{i}" for i in range(len(chunks))]
     metadatas = [{"chunk_index": i, "char_len": len(c)} for i, c in enumerate(chunks)]
     collection.add(
@@ -148,9 +153,16 @@ def get_status():
     try:
         collection = get_collection(create=False)
         count = collection.count()
+        source_name = (collection.metadata or {}).get("source_name") or None
     except Exception:
         count = 0
-    return {"ingested": count > 0, "count": count, "collection_name": COLLECTION_NAME}
+        source_name = None
+    return {
+        "ingested": count > 0,
+        "count": count,
+        "collection_name": COLLECTION_NAME,
+        "source_name": source_name,
+    }
 
 
 def retrieve(question: str, top_k: int = 4):
@@ -178,7 +190,10 @@ def retrieve(question: str, top_k: int = 4):
 
 
 def reset_collection():
-    if os.path.exists(CHROMA_DIR):
-        shutil.rmtree(CHROMA_DIR)
-    global _chroma_client
-    _chroma_client = None
+    client = get_chroma_client()
+    try:
+        client.delete_collection(COLLECTION_NAME)
+    except Exception:
+        pass
+    if os.path.exists(UPLOAD_DIR):
+        shutil.rmtree(UPLOAD_DIR)

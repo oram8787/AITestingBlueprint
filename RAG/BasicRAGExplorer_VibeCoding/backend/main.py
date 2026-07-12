@@ -2,7 +2,7 @@ import os
 import time
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from groq import Groq
 from pydantic import BaseModel
@@ -43,14 +43,34 @@ def status():
 
 
 @app.post("/api/ingest")
-def ingest():
+async def ingest(file: UploadFile | None = File(None)):
+    pdf_path = None
+    source_name = None
     try:
-        stages = rag.run_ingestion()
-        return {"success": True, "stages": stages}
+        if file is not None and file.filename:
+            if not file.filename.lower().endswith(".pdf"):
+                raise HTTPException(status_code=400, detail="Only PDF files are supported")
+            os.makedirs(rag.UPLOAD_DIR, exist_ok=True)
+            source_name = os.path.basename(file.filename)
+            pdf_path = os.path.join(rag.UPLOAD_DIR, source_name)
+            content = await file.read()
+            with open(pdf_path, "wb") as f:
+                f.write(content)
+
+        stages = rag.run_ingestion(pdf_path=pdf_path, source_name=source_name)
+        return {"success": True, "stages": stages, "source_name": stages["source_name"]}
     except FileNotFoundError:
-        raise HTTPException(status_code=404, detail="PDF not found in Data folder")
+        raise HTTPException(status_code=404, detail="PDF not found")
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/reset")
+def reset():
+    rag.reset_collection()
+    return {"success": True}
 
 
 @app.post("/api/query")
@@ -71,9 +91,10 @@ def query(req: QueryRequest):
     context = "\n\n---\n\n".join(
         f"[Chunk {r['rank']}] {r['text']}" for r in retrieved
     )
+    doc_name = status_info.get("source_name") or "the uploaded document"
     system_prompt = (
-        "You are a helpful assistant answering questions about the VWO Product "
-        "Requirements Document. Answer ONLY using the provided context chunks. "
+        f"You are a helpful assistant answering questions about the document "
+        f"'{doc_name}'. Answer ONLY using the provided context chunks. "
         "If the answer is not contained in the context, say you don't know. "
         "Cite which chunk number(s) you used."
     )

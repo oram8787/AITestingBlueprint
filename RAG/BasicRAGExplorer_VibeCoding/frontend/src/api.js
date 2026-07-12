@@ -13,8 +13,19 @@ export async function getStatus() {
   return handle(res);
 }
 
-export async function runIngestion() {
-  const res = await fetch(`${API_BASE}/api/ingest`, { method: "POST" });
+export async function runIngestion(file) {
+  const options = { method: "POST" };
+  if (file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    options.body = formData;
+  }
+  const res = await fetch(`${API_BASE}/api/ingest`, options);
+  return handle(res);
+}
+
+export async function resetIngestion() {
+  const res = await fetch(`${API_BASE}/api/reset`, { method: "POST" });
   return handle(res);
 }
 
