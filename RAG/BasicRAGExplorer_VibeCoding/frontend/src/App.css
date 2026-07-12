@@ -1,0 +1,267 @@
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #1f2430;
+}
+
+.app__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.app__header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 4px;
+}
+
+.app__header p {
+  margin: 2px 0;
+  color: #5b6472;
+}
+
+.app__stack {
+  font-size: 0.85rem;
+  color: #8a93a3;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #e3e6eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.panel h2 {
+  font-size: 1.15rem;
+  margin: 0 0 16px;
+}
+
+.btn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: #4338ca;
+}
+
+.btn:disabled {
+  background: #c7cad1;
+  cursor: not-allowed;
+}
+
+.stage-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stage-row__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stage-arrow {
+  color: #b7bcc6;
+  font-size: 1.2rem;
+}
+
+.stage-card {
+  border: 1px solid #e3e6eb;
+  border-radius: 10px;
+  padding: 14px;
+  min-width: 140px;
+  text-align: center;
+  background: #fafbfc;
+}
+
+.stage-card--active {
+  border-color: #4f46e5;
+  background: #f5f4ff;
+}
+
+.stage-card__icon {
+  font-size: 1.5rem;
+}
+
+.stage-card__label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin: 6px 0;
+}
+
+.stage-card__stats {
+  font-size: 0.75rem;
+  color: #5b6472;
+  line-height: 1.4;
+}
+
+.stage-card__stats--pending {
+  color: #b7bcc6;
+  font-style: italic;
+}
+
+.stage-card__ms {
+  margin-top: 4px;
+  font-weight: 600;
+  color: #4f46e5;
+}
+
+.error-banner {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fde8e8;
+  color: #a3242a;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.sample-chunks {
+  margin-top: 16px;
+  font-size: 0.85rem;
+}
+
+.sample-chunks summary {
+  cursor: pointer;
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.sample-chunks ul {
+  margin: 10px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.sample-chunks li {
+  padding: 8px 0;
+  border-top: 1px solid #eee;
+  color: #444;
+}
+
+.chunk-badge {
+  display: inline-block;
+  background: #eef0ff;
+  color: #4f46e5;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-right: 6px;
+}
+
+.query-form {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.query-form textarea {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #d5d8de;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.results {
+  margin-top: 20px;
+}
+
+.results h3 {
+  font-size: 1rem;
+  margin: 20px 0 10px;
+}
+
+.results__stage-timings {
+  display: flex;
+  gap: 16px;
+  font-size: 0.75rem;
+  color: #8a93a3;
+}
+
+.chunk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chunk-card {
+  border: 1px solid #e3e6eb;
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: #fafbfc;
+}
+
+.chunk-card__header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+}
+
+.chunk-card__rank {
+  font-weight: 700;
+  color: #4f46e5;
+}
+
+.chunk-card__index {
+  color: #8a93a3;
+}
+
+.chunk-card__score {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.chunk-card__bar {
+  height: 4px;
+  background: #e9ebef;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.chunk-card__bar-fill {
+  height: 100%;
+  background: #4f46e5;
+}
+
+.chunk-card__text {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.answer-card {
+  background: #f5f4ff;
+  border: 1px solid #dedcfb;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
