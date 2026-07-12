@@ -1,3 +1,13 @@
 .claude/
 .env
 env
+
+# Dependencies & build artifacts
+node_modules/
+dist/
+dist-ssr/
+target/
+allure-results/
+
+# Framework-specific secrets not covered by .env/env
+reqres-api-framework/src/test/resources/data.properties

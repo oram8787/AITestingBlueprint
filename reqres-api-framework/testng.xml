@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Reqres API Test Suite" verbose="1">
+
+    <test name="Authentication Tests">
+        <classes>
+            <class name="com.reqresapi.tests.auth.TestAuthentication"/>
+        </classes>
+    </test>
+
+    <test name="CRUD Tests">
+        <classes>
+            <class name="com.reqresapi.tests.crud.TestGetUsers"/>
+            <class name="com.reqresapi.tests.crud.TestCreateUser"/>
+            <class name="com.reqresapi.tests.crud.TestUpdateUser"/>
+            <class name="com.reqresapi.tests.crud.TestDeleteUser"/>
+        </classes>
+    </test>
+
+</suite>

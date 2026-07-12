@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Reqres E2E Suite" verbose="1">
+
+    <test name="E2E User Flow">
+        <classes>
+            <class name="com.reqresapi.tests.e2e.TestE2EUserFlow"/>
+        </classes>
+    </test>
+
+</suite>

@@ -1,0 +1,15 @@
+# Copy this file to data.properties and fill in real values.
+# data.properties is gitignored (see root .gitignore) — never commit it.
+
+user.email=your-email@example.com
+
+# reqres.in test credentials (the only accepted login on this sandbox API)
+auth.email=eve.holt@reqres.in
+auth.password=cityslicka
+
+# reqres.in API key (required as of 2025 — get a free tier key at reqres.in)
+api.key=REPLACE_WITH_YOUR_REQRES_API_KEY
+
+# Test user IDs
+valid.user.id=2
+invalid.user.id=999

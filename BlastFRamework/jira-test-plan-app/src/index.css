@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    @apply text-white antialiased;
+  }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-purple-600/50 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-purple-500; }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    @apply rounded-2xl;
+  }
+
+  .input-field {
+    @apply w-full rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600
+           transition-all duration-200 outline-none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .input-field:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    background: rgba(139, 92, 246, 0.05);
+  }
+  .input-field:hover:not(:focus) {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-primary {
+    @apply w-full font-semibold py-3 px-6 rounded-xl text-sm
+           transition-all duration-200 flex items-center justify-center gap-2
+           disabled:opacity-40 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+  }
+  .btn-primary:not(:disabled):hover {
+    background: linear-gradient(135deg, #6d28d9, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+  }
+  .btn-primary:not(:disabled):active {
+    transform: translateY(0);
+  }
+}
+
+/* ── Markdown Test Plan Styles ─────────────────────────────────────────── */
+.markdown-body { @apply text-gray-300 leading-7 text-sm; }
+
+.markdown-body h1 {
+  @apply text-2xl font-bold mb-4 mt-2;
+  background: linear-gradient(90deg, #a78bfa, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.markdown-body h2 {
+  @apply text-base font-semibold text-purple-300 mt-7 mb-3 pb-2;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.25);
+}
+.markdown-body h3 { @apply text-sm font-semibold text-blue-300 mt-5 mb-2; }
+.markdown-body h4 { @apply text-sm font-medium text-gray-400 mt-4 mb-2; }
+
+.markdown-body p  { @apply mb-3 text-gray-300; }
+.markdown-body ul { @apply mb-3 pl-5 space-y-1; }
+.markdown-body ol { @apply mb-3 pl-5 space-y-1; }
+.markdown-body li { @apply text-gray-300 list-disc; }
+.markdown-body ol li { list-style-type: decimal; }
+
+.markdown-body table {
+  @apply w-full border-collapse mb-5 text-xs rounded-lg overflow-hidden;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+.markdown-body thead tr {
+  background: linear-gradient(90deg, rgba(109, 40, 217, 0.4), rgba(37, 99, 235, 0.3));
+}
+.markdown-body th {
+  @apply text-purple-200 font-semibold px-3 py-2.5 text-left;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+}
+.markdown-body td {
+  @apply px-3 py-2 text-gray-300;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.markdown-body tbody tr:hover td { background: rgba(139, 92, 246, 0.05); }
+.markdown-body tbody tr:last-child td { border-bottom: none; }
+
+.markdown-body code {
+  @apply rounded px-1.5 py-0.5 text-xs font-mono text-purple-300;
+  background: rgba(139, 92, 246, 0.15);
+}
+.markdown-body pre {
+  @apply rounded-xl p-4 mb-4 overflow-x-auto text-xs font-mono;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.markdown-body pre code {
+  background: none;
+  padding: 0;
+  color: #e2e8f0;
+}
+.markdown-body strong { @apply text-white font-semibold; }
+.markdown-body em     { @apply text-gray-400 italic; }
+.markdown-body blockquote {
+  @apply pl-4 my-3 text-gray-400 italic text-sm;
+  border-left: 3px solid #7c3aed;
+}
+.markdown-body hr {
+  @apply my-6;
+  border-color: rgba(139, 92, 246, 0.2);
+}

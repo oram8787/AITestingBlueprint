@@ -1,0 +1,129 @@
+{
+  "config": {
+    "buildId": "build-1",
+    "buildNumber": 101,
+    "date": "2026-07-03T09:15:00.000Z",
+    "rootDir": "/repo/tests",
+    "workers": 4
+  },
+  "stats": {
+    "startTime": "2026-07-03T09:15:00.000Z",
+    "duration": 48213.5,
+    "expected": 6,
+    "unexpected": 1,
+    "flaky": 1,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "title": "Login Tests",
+      "file": "login.spec.ts",
+      "specs": [
+        {
+          "title": "should login with valid credentials",
+          "id": "login-001",
+          "ok": true,
+          "tests": [
+            {
+              "status": "expected",
+              "results": [
+                { "status": "passed", "duration": 1204, "retry": 0, "workerIndex": 0 }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "should show error for invalid password",
+          "id": "login-002",
+          "ok": true,
+          "tests": [
+            {
+              "status": "expected",
+              "results": [
+                { "status": "passed", "duration": 980, "retry": 0, "workerIndex": 1 }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "should lock account after 5 failed attempts",
+          "id": "login-003",
+          "ok": true,
+          "tests": [
+            {
+              "status": "flaky",
+              "results": [
+                { "status": "failed", "duration": 2210, "retry": 0, "workerIndex": 2, "error": { "message": "Timeout waiting for selector #lockout-banner" } },
+                { "status": "passed", "duration": 1655, "retry": 1, "workerIndex": 2 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Checkout Tests",
+      "file": "checkout.spec.ts",
+      "specs": [
+        {
+          "title": "should complete checkout with credit card",
+          "id": "checkout-001",
+          "ok": true,
+          "tests": [
+            {
+              "status": "expected",
+              "results": [
+                { "status": "passed", "duration": 3305, "retry": 0, "workerIndex": 0 }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "should apply discount code at checkout",
+          "id": "checkout-002",
+          "ok": false,
+          "tests": [
+            {
+              "status": "unexpected",
+              "results": [
+                { "status": "failed", "duration": 1890, "retry": 0, "workerIndex": 3, "error": { "message": "Expected discount total to be 45.00 but got 50.00" } }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Search Tests",
+      "file": "search.spec.ts",
+      "specs": [
+        {
+          "title": "should search for product by name",
+          "id": "search-001",
+          "ok": true,
+          "tests": [
+            {
+              "status": "expected",
+              "results": [
+                { "status": "passed", "duration": 875, "retry": 0, "workerIndex": 1 }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "should filter results by category",
+          "id": "search-002",
+          "ok": true,
+          "tests": [
+            {
+              "status": "expected",
+              "results": [
+                { "status": "passed", "duration": 1102, "retry": 0, "workerIndex": 2 }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
